@@ -1,3 +1,37 @@
+# Raspberry Pi image builder for the Protoneer CNC Controller
+
+I wanted an up-to-date OS image with [bCNC](https://github.com/vlachoudis/bCNC) on it ([original image from 2020 here](https://wiki.protoneer.co.nz/Raspberry_Pi_CNC_User_Interface_SD_Card_Image_V5.00)) and the mods required to make serial communication work out of the box.
+
+This project accomplishes this by modifying `pi-gen` and adding some of the original [Protoneer RPI config scripts](https://github.com/Protoneer/RPI-CNC-Config-Scripts).
+
+As with the original Protoneer RPI CNC image, use `/dev/ttyAMA0` to connect to the serial port. Launch `bCNC` from the terminal by running `bCNC`.
+
+## Important differences
+
+Unlike the original Protoneer RPI CNC image, I only wanted bCNC on my system so I didn't install other software such as `cncjs`, `ChiliPeppr Server`, `XRDB`, etc. I also didn't want software included in layer 5 (see below) so that layer is skipped. If you want this, feel free to fork this repository and make your own changes. A build of this was tested on my RPI 4.
+
+Misc:
+* Bluetooth is completely disabled in this image.
+* bCNC is installed directly from Github
+* you do not need to run the "RPi3/4 Serial Config" script present in the original image. It no longer exists.
+
+## Building
+
+First, You will probably want to modify the `config` file at the root of the project.
+
+To build your own image, run `sudo ./build-docker.sh -c config`. Be sure to have Docker running on your system.
+
+After the image is built (named deploy/date-name.img), write it to an SD card using the [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
+
+## Contributions
+
+If there are any other RPI Protoneer CNC hat users out there please say hi. I welcome contributions to this repo.
+
+---
+
+Original pi-gen readme:
+
+---
 # pi-gen
 
 Tool used to create Raspberry Pi OS images. (Previously known as Raspbian).
